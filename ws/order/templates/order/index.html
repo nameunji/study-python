@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Order Test</title>
+    </head>
+    <body>
+        <h1>test</h1>
+    </body>
+    <script>
+        // websocket에 접속
+
+        // console.log(window.location.host)
+        // var http = '13.125.211.215:8000'
+        var orderSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/order/'
+        );
+        // websocket에서 메세지가 온다면
+        orderSocket.onmessage = function(e){
+            var data = JSON.parse(e.data);
+            var store = data['message'];
+            console.log('final...',store);
+        }
+        // websocket이 닫혔다면
+        orderSocket.onclose = function(e){
+            console.log('bye');
+        }
+
+        // from lambda
+        orderSocket.onopen = function(e){
+            console.log('hello')
+
+            const queryString = window.location.search;
+            const checkMessageLength = 0;
+
+            if(queryString){
+                let urlParams = new URLSearchParams(queryString);
+                let message = urlParams.get('message')
+
+                if(checkMessageLength !== message.length){
+                    orderSocket.send(JSON.stringify({
+                        'message' : message
+                    }))
+                }
+            }
+                        
+        }
+        
+    </script>
+</html>
