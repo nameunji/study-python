@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Chat Room</title>
+    </head>
+    <body>
+        <textarea id="chat-log" cols="100" rows="20"></textarea><br>
+        <input id="chat-message-input" type="text" size="100"><br>
+        <input id="chat-message-submit" type="button" value="Send">
+    </body>
+    <script>
+        var roomName = {{ room_name_json }};
+
+        // websocket에 접속
+        var chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+        );
+        // websocket에 메세지가 온다면
+        chatSocket.onmessage = function(e){
+            var data = JSON.parse(e.data);
+            var message = data['message'];
+            document.querySelector('#chat-log').value += (message + '\n');
+        }
+        // websocket이 닫혔다면
+        chatSocket.onclose = function(e){
+            console.log('Chat socket closed unexpectedly');
+        }
+
+        // 채팅내용이 입력되고 submit버튼이 클릭되면
+        document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function(e){
+            if(e.keyCode === 13){
+                document.querySelector('#chat-message-submit').click();
+            }
+        }
+        document.querySelector('#chat-message-submit').onclick = function(e){
+            var messageInputDom = document.querySelector('#chat-message-input');
+            var message = messageInputDom.value;
+            // websocket에 메세지를 보냄
+            chatSocket.send(JSON.stringify({
+                'message' : message
+            }));
+            messageInputDom.value = '';
+        }
+
+    </script>
+</html>
