@@ -400,3 +400,5 @@ django_rest_framework/requests/credential.py
 ws/my_settings.py
 ws/redis-stable.tar.gz
 ws/redis-stable
+
+django_rest_framework/uploads
