@@ -14,3 +14,13 @@ Parser
 Renderer
 - 다른 종류의 응답을 제공하거나 이를 개인화할 수 있다.
 - Json Renderer, HTML Renderer 등등
+
+# two wrappers
+Django REST Framework provides two wrappers we can use to write API Views
+1. *@api_view* decorator  
+    - for working with Function Based API Views
+    - request instance를 수신하고, 적절한 response를 제공
+    - request.data에 access할 때 발생하는 ParseError같은 예외에 대해 핸들링
+    
+2. *APIView* class
+    - for working with Class Based API Views
