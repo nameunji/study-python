@@ -24,3 +24,16 @@ Django REST Framework provides two wrappers we can use to write API Views
     
 2. *APIView* class
     - for working with Class Based API Views
+    
+# validation
+how to specify custom validation checks for our models
+모델에 대한 사용자 지정 유효성 검사 지정 방법
+serializers using both Field-Level Validation and Object-Level Validation
+
+- Object level validation
+    - 여러 필드를 사용하여 유효성 검사
+- Field level validation
+    - 개체 내의 단일 필드에 대해 수행하는 검사
+    - 예를들어 한 필드에 특정 단어가 사용되지 않았는지 확인하고 싶을 때가 있는데, 이때 사용된 경우 validation error 일으킬 수 있다.를
+    
+    
