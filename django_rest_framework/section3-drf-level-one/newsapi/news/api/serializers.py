@@ -1,13 +1,15 @@
 from datetime import datetime
 from django.utils.timesince import timesince
 from rest_framework import serializers
-from ..models import Article
+from ..models import Article, Journalist
 
 
 # Use ModelSerializer
 class ArticleSerializer(serializers.ModelSerializer):
 
     time_since_publication = serializers.SerializerMethodField()
+    # author = serializers.StringRelatedField()  # ForeignKey로 연결된 모델의 __str__ 메소드에서 정의한 string를 리턴
+    # author = JournalistSerializer(read_only=True)  # 참조할 모델의 Serializer를 가져와서 사용 (참조할 Serializer가 더 위에 위치해야 참조할 수 있음)
 
     class Meta:
         model = Article
@@ -31,6 +33,17 @@ class ArticleSerializer(serializers.ModelSerializer):
         if len(value) < 30:
             raise serializers.ValidationError("The title has to be at least 30 chars long!")
         return value
+
+
+class JournalistSerializer(serializers.ModelSerializer):
+    # articles = ArticleSerializer(many=True, read_only=True)  # Journalist를 참조한 article들을 가져옴
+
+    # HyperlinkedRelatedField는 ForgeignKey로 연결된 타겟 필드의 API url을 리턴
+    articles = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name="article-detail")
+
+    class Meta:
+        model = Journalist
+        fields = "__all__"
 
 
 # class ArticleSerializer(serializers.Serializer):

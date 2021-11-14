@@ -53,3 +53,12 @@ serializers using both Field-Level Validation and Object-Level Validation
     - Serializer를 위한 validator 제공 : ex) unique_together_validators
     - .create(), .update() 함수 기본으로 제공하여 다시 만들 필요 없음
     - 추가하고 싶은 필드가 있을 경우, serializer.SerializerMethodField()로 정의해 줌
+    
+<br><br>
+
+# Nested Relationships
+- ForeignKey필드를 사용하고자 할 때, 아무런 설정이 없으면 기본적으로 참조하고 있는 pk를 가져온다.
+- 만약 pk값 외의 다른 값을 가져오고 싶다면
+    1. `serializers.StringRelatedField()`
+    2. 참조할 모델의 Serializer를 가져와서 사용
+    3. `serializers.HyperlinkedRelatedField()`
