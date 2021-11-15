@@ -11,5 +11,5 @@
     - [The APIView Class](https://github.com/nameunji/study-python/commit/5fa32248febe2388251e0c1431d1ed6ffc361ee9)
     - [Serializers Validation](https://github.com/nameunji/study-python/commit/30521efcc3c75475db2f1c3594a350e073aa5c83)
     - [The ModelSerializer Class](https://github.com/nameunji/study-python/commit/587f5c9b47b523a21fda33210e6dd68a8b24c3bf)
-    - [Nested Relationships]()
-    - Competency Assessment and Project Solution
+    - [Nested Relationships](https://github.com/nameunji/study-python/commit/8e0726cef76d936aebd53899f40c1b3edf6bcb76)
+    - [Competency Assessment and Project Solution](https://github.com/nameunji/study-python/tree/main/django_rest_framework/section3-drf-level-one/jobboard)
