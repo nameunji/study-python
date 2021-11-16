@@ -67,3 +67,10 @@ serializers using both Field-Level Validation and Object-Level Validation
 
 # GenericAPIView & Mixins
 - get, post 등 반복적으로 사용되는 view의 패턴을 파악하여 작성된 DRF의 GenericAPIView와 Mixin을 이용하면 쉽게 구현가능하다.
+
+<br><br>
+
+# Concrete View
+- GenericAPIView와 Mixins을 이미 결합해 놓은 Concrete View 클래스를 하나만 상속해서 GenericAPIView & Mixins을 상속해서 작성한 코드와 동일한 기능을 수행하는 코드를 작성할 수 있다.
+- Concrete View class는 이미 get, post, delete 등의 메소드를 내장하고 있기 때문에 get, post 함수 등을 작성할 필요가 없다.
+- Customizing : ForeignKey로 연결된 데이터가 있을 때에는 `perform_create()`를 override해 줘야 한다.
