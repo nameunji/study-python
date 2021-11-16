@@ -62,3 +62,8 @@ serializers using both Field-Level Validation and Object-Level Validation
     1. `serializers.StringRelatedField()`
     2. 참조할 모델의 Serializer를 가져와서 사용
     3. `serializers.HyperlinkedRelatedField()`
+
+<br><br>
+
+# GenericAPIView & Mixins
+- get, post 등 반복적으로 사용되는 view의 패턴을 파악하여 작성된 DRF의 GenericAPIView와 Mixin을 이용하면 쉽게 구현가능하다.
