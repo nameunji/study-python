@@ -59,7 +59,7 @@ serializers using both Field-Level Validation and Object-Level Validation
 # Nested Relationships
 - ForeignKey필드를 사용하고자 할 때, 아무런 설정이 없으면 기본적으로 참조하고 있는 pk를 가져온다.
 - 만약 pk값 외의 다른 값을 가져오고 싶다면
-    1. `serializers.StringRelatedField()`
+    1. `serializers.StringRelatedField()` : ForgeignKey로 연결된 모델의 `__str__`메소드에서 정의한 string를 리턴
     2. 참조할 모델의 Serializer를 가져와서 사용
     3. `serializers.HyperlinkedRelatedField()`
 
@@ -74,3 +74,63 @@ serializers using both Field-Level Validation and Object-Level Validation
 - GenericAPIView와 Mixins을 이미 결합해 놓은 Concrete View 클래스를 하나만 상속해서 GenericAPIView & Mixins을 상속해서 작성한 코드와 동일한 기능을 수행하는 코드를 작성할 수 있다.
 - Concrete View class는 이미 get, post, delete 등의 메소드를 내장하고 있기 때문에 get, post 함수 등을 작성할 필요가 없다.
 - Customizing : ForeignKey로 연결된 데이터가 있을 때에는 `perform_create()`를 override해 줘야 한다.
+
+<br><br>
+
+# permission
+- permission을 설정하지 않으면 누구나 접근할 수 있다.
+```python
+'DEFAULT_PERMISSION_CLASSES': [
+    'rest_framework.permissions.AllowAny',
+]
+```
+- 인증된 사용자만 접근하게 하려면,
+```python
+# settings.py
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ]
+}
+```
+- 하지만 보통 서비스에선 특정 뷰 혹은 클래스 더 작은 단위로 쪼개서 인증을 요한다.
+
+### No custom
+- Views.py에서 permissions 모듈 임포트
+- permission_classes에 사용할 permissions 클래스 명시
+```python
+class EbookListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Ebook.objects.all()
+    serializer_class = EbookSerializer
+    permission_classes = [IsAdminUserOrReadOnly]
+```
+- IsAuthenticatedOrReadOnly
+  - 누구나 Read는 가능하지만, CUD는 인증된 사용자만 접근가능하게 하는 클래스
+  - 로그인한 유저가 해당 API에 접근하면 DRF API 웹화면에서 POST가 활성화되지만, 로그인 하지 않은 유저는 비활성화된다.
+
+### Custom permission
+- 액세스되어야할 경우 True를 리턴해야하고, 아닌 경우 False를 반환해야한다.
+- request가 read인지, write인지 테스트해야하는 경우 'GET', 'OPTIONS' 및 'HEAD'를 포함하는 tuple형태의 'SAFE_METHODS'의 request method를 확인해야한다.
+
+- permissions.py 작성
+  - api 폴더 내에 permissions.py를 생성, 필요한 클래스를 직접 작성하여 사용
+  - `IsAdminUserOrReadOnly`라는 커스터마이즈된 permission 클래스를 만들기 위해 `IsAdminUser`를 상속하여 코드를 작성
+```python
+# permissions.py
+from rest_framework import permissions
+
+class IsAdminUserOrReadOnly(permissions.IsAdminUser):
+    def has_permission(self, request, view):
+        is_admin = super().has_permission(request, view)
+        return request.method in permissions.SAFE_METHODS or is_admin
+
+# views.py
+class EbookListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Ebook.objects.all()
+    serializer_class = EbookSerializer
+    permission_classes = [IsAdminUserOrReadOnly]
+```
+
+<br>
+
+**소유자만 **

@@ -4,6 +4,9 @@ from ..models import Ebook, Review
 
 class ReviewSerializer(serializers.ModelSerializer):
 
+    # StringRelatedField : ForgeignKey로 연결된 모델의 __str__ 메소드에서 정의한 string를 리턴
+    review_author = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         model = Review
         # fields = "__all__"
