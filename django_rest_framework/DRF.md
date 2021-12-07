@@ -112,9 +112,14 @@ class EbookListCreateAPIView(generics.ListCreateAPIView):
 - 액세스되어야할 경우 True를 리턴해야하고, 아닌 경우 False를 반환해야한다.
 - request가 read인지, write인지 테스트해야하는 경우 'GET', 'OPTIONS' 및 'HEAD'를 포함하는 tuple형태의 'SAFE_METHODS'의 request method를 확인해야한다.
 
-- permissions.py 작성
-  - api 폴더 내에 permissions.py를 생성, 필요한 클래스를 직접 작성하여 사용
-  - `IsAdminUserOrReadOnly`라는 커스터마이즈된 permission 클래스를 만들기 위해 `IsAdminUser`를 상속하여 코드를 작성
+- has_permission(request, view)
+  - APIView 접근시, 체크.
+  - 거의 모든 Permission 클래스에서 구현되며 로직에 따라 True/False 반환
+- has_object_permission(request, view, obj)
+  - APIView의 get_object 함수를 통해 object 획득 시에 체크.
+  - 브라우저를 통한 API 접근에서 CREATE/UPDATE Form 노출 시 체크
+  - DjangoObjectPermissions에서 구현하며 로직에 따라 True/False 반환
+
 ```python
 # permissions.py
 from rest_framework import permissions
@@ -130,7 +135,7 @@ class EbookListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = EbookSerializer
     permission_classes = [IsAdminUserOrReadOnly]
 ```
+<br><br>
 
-<br>
-
-**소유자만 **
+# Pagination
+- permission을 설정한 것처럼 global 또는 local로도 설정가능하다.

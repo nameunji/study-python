@@ -17,6 +17,6 @@
     - [GenericAPIView & Mixins](https://github.com/nameunji/study-python/commit/ab7df0f1a512bad3432a845d227a9e1b1ee6c710)
     - [Generic Class Based Views](https://github.com/nameunji/study-python/commit/d911e4b48e95cbffc396e8b26bfa4288afad7e74)
     - [Permissions - Part 1](https://github.com/nameunji/study-python/commit/c394b85058013fd7ab1dc256bd2de67ea2397750)
-    - [Permissions - Part 2]()
-    - Results Pagination 
+    - [Permissions - Part 2](https://github.com/nameunji/study-python/commit/2d4e34c33bd6b7ba0f1ecbdac96d1f2b442988be)
+    - [Results Pagination]()
     - Section Assignment and Solution
