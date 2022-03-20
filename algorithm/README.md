@@ -59,5 +59,5 @@
 <br><br>
 
 ## 프로그래머스
+[신규 아이디 추천](https://github.com/nameunji/study-python/blob/main/algorithm/etc/programmers_72410.py)  
 [최소직사각형](https://github.com/nameunji/study-python/blob/main/algorithm/Sort/programmers_86491.py)  
-[최소직사각형](https://github.com/nameunji/study-python/blob/main/algorithm/etc/programmers_72410.py)  
